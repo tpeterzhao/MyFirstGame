@@ -2,6 +2,7 @@ extends Node
 
 @export var enemy_scene: PackedScene
 @export var projectile_scene: PackedScene
+var playerPosition: Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,6 +13,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 @warning_ignore("unused_parameter")
 func _process(delta: float) -> void:
+	playerPosition = $Player.position
 	pass
 	
 func game_over():
@@ -19,6 +21,7 @@ func game_over():
 	
 func new_game():
 	$Player.start($StartPosition.position)
+	playerPosition = $StartPosition.position
 	$EnemySpawnTimer.start()
 
 
@@ -34,9 +37,6 @@ func _on_enemy_spawn_timer_timeout() -> void:
 	
 	direction += randf_range(-PI / 4, PI / 4)
 	enemy.rotation = direction
-	
-	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
-	enemy.linear_velocity = velocity.rotated(direction)
 	
 	add_child(enemy)
 	pass # Replace with function body.

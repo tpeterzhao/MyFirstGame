@@ -1,7 +1,0 @@
-res://player.tscn
-res://StateMachine.gd
-res://player.gd
-res://projectile.tscn
-res://enemy.tscn
-res://main.tscn
-res://PlayerStateMachine.gd

@@ -7,12 +7,23 @@ signal player_hit_signal
 @export var speed = 400
 var screen_size
 var velocity: Vector2 = Vector2.ZERO
-var playerState:StateMachine
+var playerActionState:PlayerStateMachine
+var playerDirectionState: PlayerStateMachine
 
-static var Player_Idle_Right_State: PlayerIdleRightState = PlayerIdleRightState.new()
-static var Player_Idle_Left_State: PlayerIdleLeftState = PlayerIdleLeftState.new()
-static var Player_Run_Right_State: PlayerRunRightState = PlayerRunRightState.new()
-static var Player_Run_Left_State: PlayerRunLeftState = PlayerRunLeftState.new()
+static var Player_Idle_State: PlayerIdleState = PlayerIdleState.new()
+static var Player_Run_State: PlayerRunState = PlayerRunState.new()
+static var Player_Hurt_State: PlayerHurtState = PlayerHurtState.new()
+static var Player_Death_State: PlayerDeathState = PlayerDeathState.new()
+static var Player_Attack_State: PlayerAttackState = PlayerAttackState.new()
+static var Player_Face_Right_State: PlayerFaceRightState = PlayerFaceRightState.new()
+static var Player_Face_Left_State: PlayerFaceLeftState = PlayerFaceLeftState.new()
+
+static var movement_actions = [
+	"move_right",
+	"move_left",
+	"move_up",
+	"move_down",
+]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,17 +37,31 @@ func _process(delta: float) -> void:
 	##handle_movement_inputs(delta)
 	
 	# player animation update based on state
-	playerState.player_update(self, delta)
+	playerActionState.player_update(self, delta)
+	playerDirectionState.player_update(self, delta)
 	$AnimatedSprite2D.play()
 	
 	# handle input
-	playerState.player_handle_input(self)
+	playerActionState.player_handle_input(self)
+	playerDirectionState.player_handle_input(self)
 
 	process_movement(delta)
 	pass
 
 	
 func process_movement(delta: float):
+	velocity = Vector2.ZERO
+	
+	## handle edge case of pressing left and right at the same time
+	if Input.is_action_pressed("move_left"):
+		velocity.x -= 1
+	if Input.is_action_pressed("move_right"):
+		velocity.x += 1
+	if Input.is_action_pressed("move_up"):
+		velocity.y -= 1
+	if Input.is_action_pressed("move_down"):
+		velocity.y += 1
+		
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
 	
@@ -46,7 +71,8 @@ func process_movement(delta: float):
 	
 func start(pos):
 	position = pos
-	playerState = self.Player_Idle_Right_State
+	playerActionState = self.Player_Idle_State
+	playerDirectionState = self.Player_Face_Right_State
 	show()
 	$CollisionShape2D.disabled = false
 	$AttackDefaultTimer.start()
@@ -54,19 +80,6 @@ func start(pos):
 func _on_timer_default_timer_timeout() -> void:
 	##action_attack_default()
 	pass # Replace with function body.
-	
-func action_attack_default():
-	$AnimatedSprite2D.animation = "attack_default"
-	$AnimatedSprite2D.flip_h = velocity.x < 0
-	spawn_projectile_signal.emit()
-	pass
-
-
-func _on_animated_sprite_2d_animation_finished() -> void:
-	if $AnimatedSprite2D.animation == "attack_default":
-		
-		pass # Replace with function body.
-	pass
 
 func _on_body_entered(body: Node2D) -> void:
 	player_hit_signal.emit()
@@ -75,64 +88,62 @@ func _on_body_entered(body: Node2D) -> void:
 func get_sprite() -> AnimatedSprite2D:
 	return $AnimatedSprite2D
 	
-	
-	
-class PlayerIdleRightState extends PlayerStateMachine:	
+class PlayerIdleState extends PlayerStateMachine:	
 	func player_update(player: Player, delta: float) -> void:
 		player.get_sprite().animation = "idle"
-		player.get_sprite().flip_h = false
-		player.velocity.x = 0
-		player.velocity.y = 0
-		
 		pass
 		
 	func player_handle_input(player: Player) -> void:
-		if Input.is_action_pressed("move_right"):
-			print("Player move right")
-			player.playerState = player.Player_Run_Right_State
-		if Input.is_action_pressed("move_left"):
-			player.playerState = player.Player_Run_Left_State
+		for action in player.movement_actions:
+			if Input.is_action_pressed(action):
+				player.playerActionState = player.Player_Run_State
+				break
 		pass
 		
-class PlayerIdleLeftState extends PlayerStateMachine:
-	func player_update(player: Player, delta: float) -> void:
-		player.get_sprite().animation = "idle"
-		player.get_sprite().flip_h = true
-		player.velocity.x = 0
-		player.velocity.y = 0
-		pass
-		
-	func player_handle_input(player: Player) -> void:
-		if Input.is_action_pressed("move_right"):
-			player.playerState = player.Player_Run_Right_State
-		if Input.is_action_pressed("move_left"):
-			player.playerState = player.Player_Run_Left_State
-		
-class PlayerRunRightState extends PlayerStateMachine:
+class PlayerRunState extends PlayerStateMachine:
 	func player_update(player: Player, delta: float) -> void:
 		player.get_sprite().animation = "run"
-		player.get_sprite().flip_h = false
-		## player move right
-		player.velocity.x = 1
 		pass
 		
 	func player_handle_input(player: Player) -> void:
-		if Input.is_action_pressed("move_left"):
-			player.playerState = player.Player_Run_Left_State
-		elif !Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_down") && !Input.is_action_pressed("move_up"):
-			player.playerState = player.Player_Idle_Right_State
+		for action in player.movement_actions:
+			if Input.is_action_pressed(action):
+				return
+		player.playerActionState = player.Player_Idle_State
+		pass
+
+class PlayerHurtState extends PlayerStateMachine:
+	func player_update(player: Player, delta: float) -> void:
+		player.get_sprite().animation = "hurt"
+		pass
+		
+class PlayerDeathState extends PlayerStateMachine:
+	func player_update(player: Player, delta: float) -> void:
+		player.get_sprite().animation = "death"
+		pass
+
+class PlayerAttackState extends PlayerStateMachine:
+	func player_update(player: Player, delta: float) -> void:
+		player.get_sprite().animation = "attack1"
+		pass
 			
-class PlayerRunLeftState extends PlayerStateMachine:
+class PlayerFaceLeftState extends PlayerStateMachine:
 	func player_update(player: Player, delta: float) -> void:
-		player.get_sprite().animation = "run"
 		player.get_sprite().flip_h = true
-		
-		## player move left
-		player.velocity.x = -1
 		pass
 		
 	func player_handle_input(player: Player) -> void:
-		if Input.is_action_pressed("move_right"):
-			player.playerState = player.Player_Run_Right_State
-		elif !Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_down") && !Input.is_action_pressed("move_up"):
-			player.playerState = player.Player_Idle_Left_State
+		if Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+			player.playerDirectionState = player.Player_Face_Right_State
+		pass
+
+class PlayerFaceRightState extends PlayerStateMachine:
+	func player_update(player: Player, delta: float) -> void:
+		player.get_sprite().flip_h = false
+		pass
+		
+	func player_handle_input(player: Player) -> void:
+		if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+			player.playerDirectionState = player.Player_Face_Left_State
+		pass
+		

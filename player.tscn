@@ -527,7 +527,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -556,7 +556,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ji0nn"]
@@ -573,7 +573,9 @@ position = Vector2(0, -48)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_2dwog")
-animation = &"idle"
+animation = &"hurt"
+frame = 2
+frame_progress = 0.760075
 offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
