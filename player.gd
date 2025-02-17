@@ -1,7 +1,7 @@
 class_name Player
 extends Area2D
 
-signal spawn_projectile_signal
+signal spawn_projectile_signal(position, direction)
 signal player_hit_signal
 
 @export var speed = 400
@@ -80,13 +80,17 @@ func start(pos):
 
 func _on_default_attack_timer_timer_timeout() -> void:
 	##action_attack_default()
-	spawn_projectile_signal.emit()
 	print("Time to attack!")
+	$AttackPrepareDurationTimer.start()
+	$AttackDurationTimer.start()
 	playerPreviousActionState = playerActionState
 	playerActionState = Player_Attack_State
-	$AttackDurationTimer.start()
 	pass # Replace with function body.
 
+func _on_attack_prepare_duration_timer_timeout() -> void:
+	spawn_projectile_signal.emit()
+	pass # Replace with function body.
+	
 func _on_attack_duration_timer_timeout() -> void:
 	playerActionState.finish_attack(self)
 	pass # Replace with function body.
@@ -135,7 +139,7 @@ class PlayerDeathState extends PlayerStateMachine:
 class PlayerAttackState extends PlayerStateMachine:
 	func player_update(player: Player, delta: float) -> void:
 		print("Player attacking")
-		player.get_sprite().animation = "attack1"
+		player.get_sprite().animation = "attack_default"
 		pass
 		
 	func finish_attack(player: Player) -> void:

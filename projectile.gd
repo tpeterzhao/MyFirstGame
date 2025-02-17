@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var speed = 1000
+@export var speed = 3000
 signal hit
 var flipped: bool = false
 # Called when the node enters the scene tree for the first time.

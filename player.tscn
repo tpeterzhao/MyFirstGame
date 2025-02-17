@@ -594,7 +594,12 @@ autostart = true
 [node name="AttackDurationTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="AttackPrepareDurationTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="AttackDefaultTimer" to="." method="_on_default_attack_timer_timer_timeout"]
 [connection signal="timeout" from="AttackDurationTimer" to="." method="_on_attack_duration_timer_timeout"]
+[connection signal="timeout" from="AttackPrepareDurationTimer" to="." method="_on_attack_prepare_duration_timer_timeout"]
