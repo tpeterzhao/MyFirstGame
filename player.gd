@@ -7,7 +7,8 @@ signal player_hit_signal
 @export var speed = 400
 var screen_size
 var velocity: Vector2 = Vector2.ZERO
-var playerActionState:PlayerStateMachine
+var playerActionState:PlayerStateMachine = Player_Idle_State
+var playerPreviousActionState: PlayerStateMachine = Player_Idle_State
 var playerDirectionState: PlayerStateMachine
 
 static var Player_Idle_State: PlayerIdleState = PlayerIdleState.new()
@@ -77,8 +78,17 @@ func start(pos):
 	$CollisionShape2D.disabled = false
 	$AttackDefaultTimer.start()
 
-func _on_timer_default_timer_timeout() -> void:
+func _on_default_attack_timer_timer_timeout() -> void:
 	##action_attack_default()
+	spawn_projectile_signal.emit()
+	print("Time to attack!")
+	playerPreviousActionState = playerActionState
+	playerActionState = Player_Attack_State
+	$AttackDurationTimer.start()
+	pass # Replace with function body.
+
+func _on_attack_duration_timer_timeout() -> void:
+	playerActionState.finish_attack(self)
 	pass # Replace with function body.
 
 func _on_body_entered(body: Node2D) -> void:
@@ -124,7 +134,13 @@ class PlayerDeathState extends PlayerStateMachine:
 
 class PlayerAttackState extends PlayerStateMachine:
 	func player_update(player: Player, delta: float) -> void:
+		print("Player attacking")
 		player.get_sprite().animation = "attack1"
+		pass
+		
+	func finish_attack(player: Player) -> void:
+		print("Player finish attack")
+		player.playerActionState = player.playerPreviousActionState
 		pass
 			
 class PlayerFaceLeftState extends PlayerStateMachine:

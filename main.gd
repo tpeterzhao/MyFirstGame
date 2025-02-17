@@ -41,14 +41,13 @@ func _on_enemy_spawn_timer_timeout() -> void:
 	add_child(enemy)
 	pass # Replace with function body.
 
-func spawn_projectile():
+func spawn_projectile_signal_recieved():
 	var projectile = projectile_scene.instantiate()
 	
 	var spawn_location = $Player/ProjectileSpawnLocation.global_position
 	
 	projectile.position = spawn_location
-	if $Player.flipped:
-		projectile.flip()
+	projectile.rotation = $Player.rotation
 	
 	add_child(projectile)
 	print("spawn projectile")
