@@ -588,7 +588,7 @@ shape = SubResource("CapsuleShape2D_ji0nn")
 [node name="AttackThreeTimer" type="Timer" parent="."]
 
 [node name="AttackDefaultTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 2.0
 autostart = true
 
 [node name="AttackDurationTimer" type="Timer" parent="."]

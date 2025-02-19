@@ -10,6 +10,8 @@ var velocity: Vector2 = Vector2.ZERO
 var playerActionState:PlayerStateMachine = Player_Idle_State
 var playerPreviousActionState: PlayerStateMachine = Player_Idle_State
 var playerDirectionState: PlayerStateMachine
+## player direction in radiance, 0 for right, pi for left
+var playerDirection: float = 0
 
 static var Player_Idle_State: PlayerIdleState = PlayerIdleState.new()
 static var Player_Run_State: PlayerRunState = PlayerRunState.new()
@@ -88,7 +90,7 @@ func _on_default_attack_timer_timer_timeout() -> void:
 	pass # Replace with function body.
 
 func _on_attack_prepare_duration_timer_timeout() -> void:
-	spawn_projectile_signal.emit()
+	spawn_projectile_signal.emit($ProjectileSpawnLocation.global_position, playerDirection)
 	pass # Replace with function body.
 	
 func _on_attack_duration_timer_timeout() -> void:
@@ -155,6 +157,7 @@ class PlayerFaceLeftState extends PlayerStateMachine:
 	func player_handle_input(player: Player) -> void:
 		if Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
 			player.playerDirectionState = player.Player_Face_Right_State
+			player.playerDirection = 0
 		pass
 
 class PlayerFaceRightState extends PlayerStateMachine:
@@ -165,5 +168,6 @@ class PlayerFaceRightState extends PlayerStateMachine:
 	func player_handle_input(player: Player) -> void:
 		if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
 			player.playerDirectionState = player.Player_Face_Left_State
+			player.playerDirection = PI
 		pass
 		

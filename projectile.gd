@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var speed = 3000
+@export var speed = 2000
 signal hit
 var flipped: bool = false
 # Called when the node enters the scene tree for the first time.
@@ -10,7 +10,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	position.x += speed * delta
+	position.x += speed * delta * cos(rotation)
+	position.y += speed * delta * sin(rotation)
 	pass
 
 func flip():
