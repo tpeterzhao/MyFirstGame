@@ -257,8 +257,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o1nkn"]
-radius = 6.0
-height = 34.0
+radius = 17.0
+height = 72.0
 
 [node name="Projectile" type="Area2D"]
 script = ExtResource("1_py4t8")
