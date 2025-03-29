@@ -573,9 +573,9 @@ position = Vector2(0, -48)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_2dwog")
-animation = &"attack_default"
-frame = 12
-frame_progress = 1.0
+animation = &"death"
+frame = 5
+frame_progress = 0.813884
 offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

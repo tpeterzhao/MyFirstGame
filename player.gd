@@ -5,6 +5,9 @@ signal spawn_projectile_signal(position, direction)
 signal player_hit_signal
 
 @export var speed = 400
+@export var health = 3
+@export var damage = 5
+
 var screen_size
 var velocity: Vector2 = Vector2.ZERO
 var playerActionState:PlayerStateMachine = Player_Idle_State
@@ -43,6 +46,10 @@ func _process(delta: float) -> void:
 	playerActionState.player_update(self, delta)
 	playerDirectionState.player_update(self, delta)
 	$AnimatedSprite2D.play()
+	
+	if health <= 0 && playerActionState != Player_Death_State:
+		playerActionState = Player_Death_State
+		playerActionState.enter_state(self)
 	
 	# handle input
 	playerActionState.player_handle_input(self)
@@ -131,21 +138,29 @@ class PlayerRunState extends PlayerStateMachine:
 class PlayerHurtState extends PlayerStateMachine:
 	func player_update(player: Player, delta: float) -> void:
 		player.get_sprite().animation = "hurt"
+		## player's health -1 on hit
+		player.health =- 1
 		pass
 		
 class PlayerDeathState extends PlayerStateMachine:
+	func enter_state(player: Player) -> void:
+		for child in player.get_children():
+			if child is not AnimatedSprite2D:
+				child.set_process(false)
+				
 	func player_update(player: Player, delta: float) -> void:
 		player.get_sprite().animation = "death"
+		print("You Died")
 		pass
 
 class PlayerAttackState extends PlayerStateMachine:
 	func player_update(player: Player, delta: float) -> void:
-		print("Player attacking")
+		##print("Player attacking")
 		player.get_sprite().animation = "attack_default"
 		pass
 		
 	func finish_attack(player: Player) -> void:
-		print("Player finish attack")
+		##print("Player finish attack")
 		player.playerActionState = player.playerPreviousActionState
 		pass
 			
