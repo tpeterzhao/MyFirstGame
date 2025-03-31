@@ -28,7 +28,7 @@ curve = SubResource("Curve2D_pqv8b")
 
 [node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemySpawnPath"]
 
-[connection signal="player_hit_signal" from="Player" to="." method="_on_player_player_hit_signal"]
-[connection signal="spawn_projectile_signal" from="Player" to="." method="_on_player_spawn_projectile_signal"]
+[connection signal="game_over_signal" from="Player" to="." method="_on_player_game_over_signal"]
 [connection signal="spawn_projectile_signal" from="Player" to="." method="spawn_projectile_signal_recieved"]
+[connection signal="spawn_projectile_signal" from="Player" to="." method="_on_player_spawn_projectile_signal"]
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

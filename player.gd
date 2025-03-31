@@ -2,7 +2,7 @@ class_name Player
 extends Area2D
 
 signal spawn_projectile_signal(position, direction)
-signal player_hit_signal
+signal game_over_signal
 
 @export var speed = 400
 @export var health = 3
@@ -18,7 +18,6 @@ var playerDirection: float = 0
 
 static var Player_Idle_State: PlayerIdleState = PlayerIdleState.new()
 static var Player_Run_State: PlayerRunState = PlayerRunState.new()
-static var Player_Hurt_State: PlayerHurtState = PlayerHurtState.new()
 static var Player_Death_State: PlayerDeathState = PlayerDeathState.new()
 static var Player_Attack_State: PlayerAttackState = PlayerAttackState.new()
 static var Player_Face_Right_State: PlayerFaceRightState = PlayerFaceRightState.new()
@@ -41,15 +40,20 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	##handle_movement_inputs(delta)
+	if playerActionState == Player_Death_State:
+		pass
 	
+	if health <= 0 && playerActionState != Player_Death_State:
+		playerActionState = Player_Death_State
+		Player_Death_State.enter_state(self)
+		pass
+		
 	# player animation update based on state
 	playerActionState.player_update(self, delta)
 	playerDirectionState.player_update(self, delta)
 	$AnimatedSprite2D.play()
 	
-	if health <= 0 && playerActionState != Player_Death_State:
-		playerActionState = Player_Death_State
-		playerActionState.enter_state(self)
+
 	
 	# handle input
 	playerActionState.player_handle_input(self)
@@ -89,11 +93,12 @@ func start(pos):
 
 func _on_default_attack_timer_timer_timeout() -> void:
 	##action_attack_default()
-	print("Time to attack!")
+	#print("Time to attack!")
 	$AttackPrepareDurationTimer.start()
 	$AttackDurationTimer.start()
 	playerPreviousActionState = playerActionState
 	playerActionState = Player_Attack_State
+	playerActionState.enter_state(self)
 	pass # Replace with function body.
 
 func _on_attack_prepare_duration_timer_timeout() -> void:
@@ -104,9 +109,17 @@ func _on_attack_duration_timer_timeout() -> void:
 	playerActionState.finish_attack(self)
 	pass # Replace with function body.
 
+## when player is hit by enemy
 func _on_body_entered(body: Node2D) -> void:
-	player_hit_signal.emit()
+	player_hurt()
 	pass # Replace with function body.
+	
+func player_hurt() -> void:
+	health -= 1
+	print("Player hurt, now health is: ", health)
+	if health <= 0:
+		playerActionState = Player_Death_State
+		playerActionState.enter_state(self)
 	
 func get_sprite() -> AnimatedSprite2D:
 	return $AnimatedSprite2D
@@ -134,29 +147,30 @@ class PlayerRunState extends PlayerStateMachine:
 				return
 		player.playerActionState = player.Player_Idle_State
 		pass
-
-class PlayerHurtState extends PlayerStateMachine:
-	func player_update(player: Player, delta: float) -> void:
-		player.get_sprite().animation = "hurt"
-		## player's health -1 on hit
-		player.health =- 1
-		pass
 		
 class PlayerDeathState extends PlayerStateMachine:
 	func enter_state(player: Player) -> void:
+		#print("Enter death")
+		player.get_sprite().play("death")
+		player.set_process(false)
 		for child in player.get_children():
-			if child is not AnimatedSprite2D:
+			if child is Timer:
+				child.stop()
+			elif child is CollisionShape2D:
+				child.set_deferred("disabled", true)
+			else:
 				child.set_process(false)
+				child.set_physics_process(false)
+			
 				
 	func player_update(player: Player, delta: float) -> void:
-		player.get_sprite().animation = "death"
-		print("You Died")
 		pass
 
 class PlayerAttackState extends PlayerStateMachine:
+	func enter_state(player: Player):
+		player.get_sprite().animation = "attack_default"
 	func player_update(player: Player, delta: float) -> void:
 		##print("Player attacking")
-		player.get_sprite().animation = "attack_default"
 		pass
 		
 	func finish_attack(player: Player) -> void:
@@ -186,3 +200,11 @@ class PlayerFaceRightState extends PlayerStateMachine:
 			player.playerDirection = PI
 		pass
 		
+
+func _on_death_animation_finished() -> void:
+	if get_sprite().animation == "death":
+		#print("You died")
+		disable_mode
+		get_tree().paused = true
+		game_over_signal.emit()
+	pass # Replace with function body.

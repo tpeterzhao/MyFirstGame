@@ -1,7 +1,9 @@
 class_name PlayerStateMachine
 extends StateMachine
 
-
+func enter_state(player: Player) -> void:
+	pass
+	
 func player_update(player: Player, delta: float) -> void:
 	super.update(player, delta)
 	pass
