@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var speed = 2000
-signal hit
+@export var damage: int = 5
 var flipped: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,10 +24,11 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	hide()
-	body.hide()
-	hit.emit()
+	if body is Enemy:
+		body.take_damage(damage)
+	## remove projectile on hit
 	$CollisionShape2D.set_deferred("disabled", true)
+	hide()
 	pass # Replace with function body.
 
 

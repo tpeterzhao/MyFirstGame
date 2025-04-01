@@ -6,6 +6,8 @@ var enemyVelocity: Vector2
 @export var defaultSpeed: float = randf_range(100.0, 200.0)
 @export var attackSpeed: float = 400
 @export var attackRange: float = 400
+@export var enemyHealth: int = 3
+signal enemy_damage_taken_signal
 
 
 static var Enemy_Run_State: StateMachine = EnemyRunState.new()
@@ -36,13 +38,30 @@ func _physics_process(delta: float) -> void:
 	enemyState.enemy_physics_update(self, delta)
 	pass
 
+func take_damage(amount: int) -> void:
+	print("Enemy taken ", amount, "damage")
+	enemyHealth -= amount
+	## fire damage taken signal for UI to update
+	enemy_damage_taken_signal.emit()
+	check_for_enemy_death()
+	pass
+	
+func check_for_enemy_death() -> void:
+	if enemyHealth <= 0:
+		enemy_die()
+	pass
+	
+func enemy_die() -> void:
+	print("enemy died")
+	hide()
+	pass
+
 func get_sprite() -> AnimatedSprite2D:
 	return $AnimatedSprite2D
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 	pass # Replace with function body.
-
 
 func _on_hidden() -> void:
 	queue_free()
