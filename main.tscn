@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dwsvnjjep5hvn"]
+[gd_scene load_steps=7 format=3 uid="uid://dwsvnjjep5hvn"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_phxou"]
 [ext_resource type="PackedScene" uid="uid://jwjf2ljbnb1w" path="res://enemy.tscn" id="2_r760p"]
 [ext_resource type="PackedScene" uid="uid://21qe7wfygf0j" path="res://player.tscn" id="3_8u6ph"]
 [ext_resource type="PackedScene" uid="uid://bp48ohnemjlks" path="res://projectile.tscn" id="3_qw7j6"]
+[ext_resource type="PackedScene" uid="uid://0isev52k0w41" path="res://player_health_ui.tscn" id="5_0hp2c"]
 
 [sub_resource type="Curve2D" id="Curve2D_pqv8b"]
 _data = {
@@ -17,6 +18,7 @@ enemy_scene = ExtResource("2_r760p")
 projectile_scene = ExtResource("3_qw7j6")
 
 [node name="Player" parent="." instance=ExtResource("3_8u6ph")]
+position = Vector2(159, 149)
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -28,7 +30,12 @@ curve = SubResource("Curve2D_pqv8b")
 
 [node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemySpawnPath"]
 
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PlayerHealthUI" parent="UI" instance=ExtResource("5_0hp2c")]
+
 [connection signal="game_over_signal" from="Player" to="." method="_on_player_game_over_signal"]
-[connection signal="spawn_projectile_signal" from="Player" to="." method="spawn_projectile_signal_recieved"]
+[connection signal="player_health_update_signal" from="Player" to="." method="_on_player_player_health_update_signal"]
 [connection signal="spawn_projectile_signal" from="Player" to="." method="_on_player_spawn_projectile_signal"]
+[connection signal="spawn_projectile_signal" from="Player" to="." method="spawn_projectile_signal_recieved"]
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

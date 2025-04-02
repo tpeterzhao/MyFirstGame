@@ -7,6 +7,7 @@ var enemyVelocity: Vector2
 @export var attackSpeed: float = 400
 @export var attackRange: float = 400
 @export var enemyHealth: int = 3
+@export var damage: int = 1
 signal enemy_damage_taken_signal
 
 

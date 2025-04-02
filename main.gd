@@ -58,3 +58,9 @@ func spawn_projectile_signal_recieved(position, direction):
 func _on_player_game_over_signal() -> void:
 	game_over()
 	pass
+
+
+func _on_player_player_health_update_signal(amount: Variant) -> void:
+	print("Main got signal")
+	$UI/PlayerHealthUI.update_health(amount)
+	pass # Replace with function body.

@@ -3,9 +3,12 @@ extends Area2D
 
 signal spawn_projectile_signal(position, direction)
 signal game_over_signal
+signal player_health_update_signal(amount)
+signal player_max_health_update_signal(amount)
 
 @export var speed = 400
-@export var health = 3
+var health = 3
+@export var max_health = 3
 @export var damage = 5
 
 var screen_size
@@ -90,6 +93,19 @@ func start(pos):
 	show()
 	$CollisionShape2D.disabled = false
 	$AttackDefaultTimer.start()
+	
+	## init player health
+	health = max_health
+	player_max_health_update(max_health)
+	player_health_update(health)
+
+func player_health_update(health: int) -> void:
+	player_health_update_signal.emit(health)
+	pass
+
+func player_max_health_update(max_health: int) -> void:
+	player_max_health_update_signal.emit(max_health)
+	pass
 
 func _on_default_attack_timer_timer_timeout() -> void:
 	##action_attack_default()
@@ -111,11 +127,12 @@ func _on_attack_duration_timer_timeout() -> void:
 
 ## when player is hit by enemy
 func _on_body_entered(body: Node2D) -> void:
-	player_hurt()
+	player_hurt(body.damage)
 	pass # Replace with function body.
 	
-func player_hurt() -> void:
-	health -= 1
+func player_hurt(amount: int) -> void:
+	health -= amount
+	player_health_update_signal.emit(health)
 	print("Player hurt, now health is: ", health)
 	if health <= 0:
 		playerActionState = Player_Death_State
@@ -200,7 +217,6 @@ class PlayerFaceRightState extends PlayerStateMachine:
 			player.playerDirection = PI
 		pass
 		
-
 func _on_death_animation_finished() -> void:
 	if get_sprite().animation == "death":
 		#print("You died")
