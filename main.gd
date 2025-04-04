@@ -20,8 +20,9 @@ func game_over():
 	#var game_over_scene = preload("res://GameOverScreen.tscn").instantiate()
 	#get_tree().get_root().add_child(game_over_scene)
 	# Optionally, you can also disable player controls or pause the game
-	get_tree().paused = true
-	print("Game Over!")
+	##get_tree().paused = true
+	get_tree().change_scene_to_file("res://game_over_screen.tscn")
+	##print("Game Over!")
 
 func new_game():
 	$Player.start($StartPosition.position)

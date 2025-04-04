@@ -221,6 +221,6 @@ func _on_death_animation_finished() -> void:
 	if get_sprite().animation == "death":
 		#print("You died")
 		disable_mode
-		get_tree().paused = true
+		##get_tree().paused = true
 		game_over_signal.emit()
 	pass # Replace with function body.
