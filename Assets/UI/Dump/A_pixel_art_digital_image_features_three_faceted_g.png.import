@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jsivmjooquyl"
-path="res://.godot/imported/Grayed_Empty_Player_Health_Heart.png-cb88a0be3a9e0810a172d671a79641ad.ctex"
+uid="uid://cndfmtmdcbkgo"
+path="res://.godot/imported/A_pixel_art_digital_image_features_three_faceted_g.png-a0139498e79ee9791469aeb6f369a653.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Grayed_Empty_Player_Health_Heart.png"
-dest_files=["res://.godot/imported/Grayed_Empty_Player_Health_Heart.png-cb88a0be3a9e0810a172d671a79641ad.ctex"]
+source_file="res://Assets/UI/Dump/A_pixel_art_digital_image_features_three_faceted_g.png"
+dest_files=["res://.godot/imported/A_pixel_art_digital_image_features_three_faceted_g.png-a0139498e79ee9791469aeb6f369a653.ctex"]
 
 [params]
 

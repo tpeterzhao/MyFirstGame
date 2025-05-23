@@ -141,6 +141,14 @@ func player_hurt(amount: int) -> void:
 func get_sprite() -> AnimatedSprite2D:
 	return $AnimatedSprite2D
 	
+func _on_death_animation_finished() -> void:
+	if get_sprite().animation == "death":
+		#print("You died")
+		disable_mode
+		##get_tree().paused = true
+		game_over_signal.emit()
+	pass # Replace with function body.
+	
 class PlayerIdleState extends PlayerStateMachine:	
 	func player_update(player: Player, delta: float) -> void:
 		player.get_sprite().animation = "idle"
@@ -217,10 +225,3 @@ class PlayerFaceRightState extends PlayerStateMachine:
 			player.playerDirection = PI
 		pass
 		
-func _on_death_animation_finished() -> void:
-	if get_sprite().animation == "death":
-		#print("You died")
-		disable_mode
-		##get_tree().paused = true
-		game_over_signal.emit()
-	pass # Replace with function body.

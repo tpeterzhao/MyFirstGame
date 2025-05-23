@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jsivmjooquyl"
-path="res://.godot/imported/Grayed_Empty_Player_Health_Heart.png-cb88a0be3a9e0810a172d671a79641ad.ctex"
+uid="uid://b1gm47562jw5l"
+path="res://.godot/imported/Start_Button_Oval_Black_Outline_Cleaned.png-4648e1a7817c5fdc155137a4af148c86.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Grayed_Empty_Player_Health_Heart.png"
-dest_files=["res://.godot/imported/Grayed_Empty_Player_Health_Heart.png-cb88a0be3a9e0810a172d671a79641ad.ctex"]
+source_file="res://Assets/UI/Dump/Start_Button_Oval_Black_Outline_Cleaned.png"
+dest_files=["res://.godot/imported/Start_Button_Oval_Black_Outline_Cleaned.png-4648e1a7817c5fdc155137a4af148c86.ctex"]
 
 [params]
 

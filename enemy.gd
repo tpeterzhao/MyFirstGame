@@ -13,6 +13,7 @@ signal enemy_damage_taken_signal
 
 static var Enemy_Run_State: StateMachine = EnemyRunState.new()
 static var Enemy_Attack_State: StateMachine = EnemyAttackState.new()
+static var Enemy_Death_State: StateMachine = EnemyDeathState.new()
 # Called when the node enters the scene tree for the first time.
 
 func _init() -> void:
@@ -54,19 +55,23 @@ func check_for_enemy_death() -> void:
 	
 func enemy_die() -> void:
 	print("enemy died")
-	hide()
+	enemyState = Enemy_Death_State
+	enemyState.enter_state(self)
 	pass
 
 func get_sprite() -> AnimatedSprite2D:
 	return $AnimatedSprite2D
 
+func get_collider() -> CollisionShape2D:
+	return $CollisionShape2D
+	
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 	pass # Replace with function body.
 
 func _on_hidden() -> void:
 	queue_free()
-	pass # Replace with function body.
+	pass
 	
 class EnemyRunState extends StateMachine:
 	func enemy_update(enemy: Enemy, playerPosition: Vector2, delta: float) -> void:
@@ -97,4 +102,27 @@ class EnemyAttackState extends StateMachine:
 		if playerDistance > enemy.attackRange:
 			enemy.enemyState = enemy.Enemy_Run_State
 			pass
+		pass
+
+class EnemyDeathState extends StateMachine:
+	func enter_state(enemy: Enemy) -> void:
+		## set animation to death
+		enemy.get_sprite().animation = "death"
+		enemy.get_sprite().play()
+		var tween = enemy.create_tween()
+		tween.tween_property(enemy.get_sprite(), "modulate:a", 0.0, 1.0)
+		tween.tween_callback(enemy.get_sprite().queue_free)
+		
+		enemy.set_velocity(0)
+		enemy.set_process(false)
+		enemy.get_collider().disabled = true
+		
+		await enemy.get_sprite().animation_finished
+		enemy.hide()
+		pass
+		
+	func enemy_update(enemy: Enemy, playerPosition: Vector2, delta: float) ->void:
+		pass
+	
+	func enemy_physics_update(enemy: Enemy, delta: float) -> void:
 		pass
