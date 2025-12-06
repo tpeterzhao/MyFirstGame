@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://mg0gj3j4mn6o"]
+
+[ext_resource type="Texture2D" uid="uid://ctciiq5xnrr58" path="res://Assets/Sprites/Animations/Mobs/Evil_Alien2/BIG_MANY_EYES_attack_platformer_attack-Sheet.png" id="1_anp44"]
+[ext_resource type="Texture2D" uid="uid://bw64aptvbshj5" path="res://Assets/Sprites/Animations/Mobs/Evil_Alien2/BIG_MANY_EYES_attack_top_down_attack-Sheet.png" id="2_4hi0i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0tqe"]
+atlas = ExtResource("1_anp44")
+region = Rect2(0, 0, 128, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysaam"]
+atlas = ExtResource("1_anp44")
+region = Rect2(128, 0, 128, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7d34"]
+atlas = ExtResource("1_anp44")
+region = Rect2(256, 0, 128, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6k0n2"]
+atlas = ExtResource("2_4hi0i")
+region = Rect2(0, 0, 128, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3xsa"]
+atlas = ExtResource("2_4hi0i")
+region = Rect2(128, 0, 128, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5j7e6"]
+atlas = ExtResource("2_4hi0i")
+region = Rect2(256, 0, 128, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7sk06"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0tqe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysaam")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7d34")
+}],
+"loop": true,
+"name": &"attack1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6k0n2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3xsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5j7e6")
+}],
+"loop": true,
+"name": &"attack2",
+"speed": 5.0
+}]
+
+[node name="alien_spikes" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7sk06")
+animation = &"attack2"
+frame_progress = 0.663198

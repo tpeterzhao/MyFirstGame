@@ -1,0 +1,162 @@
+[gd_scene load_steps=23 format=3 uid="uid://bq8c2f5xqu5xn"]
+
+[ext_resource type="Texture2D" uid="uid://4urscmjkwg3c" path="res://Assets/Sprites/Animations/Projectiles/Dark_Hole/Dark_Hole_red.png" id="1_iyh8o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p24p7"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(0, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fccjx"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(112, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0fm8"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(224, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrctl"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(336, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbb14"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(448, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vntrs"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(560, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhxjv"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(672, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ehvi"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(784, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3o16"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(896, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_libk6"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(1008, 112, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fl8ya"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(0, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ekl1"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(112, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2276"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(224, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_to78a"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(336, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jg05q"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(448, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxy41"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(560, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omvto"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(672, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7mcw"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(784, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_av7i2"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(896, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0iuu"]
+atlas = ExtResource("1_iyh8o")
+region = Rect2(1008, 0, 112, 112)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_prmpm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p24p7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fccjx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0fm8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrctl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbb14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vntrs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhxjv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ehvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3o16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_libk6")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fl8ya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ekl1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2276")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_to78a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jg05q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxy41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omvto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7mcw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_av7i2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0iuu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[node name="dark_hole_red" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_prmpm")
+animation = &"idle"

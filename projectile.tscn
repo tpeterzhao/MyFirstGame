@@ -1,6 +1,6 @@
 [gd_scene load_steps=40 format=3 uid="uid://bp48ohnemjlks"]
 
-[ext_resource type="Texture2D" uid="uid://c801tdm4cayf0" path="res://Assets/Sprites/GandalfHardcore Projectiles4.png" id="1_ifvrn"]
+[ext_resource type="Texture2D" uid="uid://c801tdm4cayf0" path="res://Assets/Sprites/Animations/Projectiles/Fire_Ball/fire_ball.png" id="1_ifvrn"]
 [ext_resource type="Script" path="res://projectile.gd" id="1_py4t8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rau8a"]

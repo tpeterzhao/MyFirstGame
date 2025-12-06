@@ -1,10 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwsvnjjep5hvn"]
+[gd_scene load_steps=15 format=3 uid="uid://dwsvnjjep5hvn"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_phxou"]
-[ext_resource type="PackedScene" uid="uid://jwjf2ljbnb1w" path="res://enemy.tscn" id="2_r760p"]
+[ext_resource type="PackedScene" uid="uid://jwjf2ljbnb1w" path="res://Mobs/enemy.tscn" id="2_r760p"]
 [ext_resource type="PackedScene" uid="uid://21qe7wfygf0j" path="res://player.tscn" id="3_8u6ph"]
 [ext_resource type="PackedScene" uid="uid://bp48ohnemjlks" path="res://projectile.tscn" id="3_qw7j6"]
 [ext_resource type="PackedScene" uid="uid://0isev52k0w41" path="res://player_health_ui.tscn" id="5_0hp2c"]
+[ext_resource type="Texture2D" uid="uid://cml237wrb781s" path="res://Assets/Sprites/Gems/Orange_Gem_Leaf_32x32_Styled.png" id="6_0lsva"]
+[ext_resource type="Texture2D" uid="uid://bf0ysbd0jrqyd" path="res://Assets/Sprites/Gems/gemstone54.png" id="7_y0vlo"]
+[ext_resource type="Texture2D" uid="uid://c0m3mqxsfcuko" path="res://Assets/Sprites/Gems/gemstone52.png" id="8_65im5"]
+[ext_resource type="Texture2D" uid="uid://d2tusgn2bvsmm" path="res://Assets/Sprites/Gems/gemstone64.png" id="9_awnel"]
+[ext_resource type="Texture2D" uid="uid://jhmlt53tgcc2" path="res://Assets/Sprites/Gems/gemstone38.png" id="10_tgmpa"]
+[ext_resource type="Texture2D" uid="uid://dpiqshpc4g5oh" path="res://Assets/Sprites/Items/gemstone42.png" id="11_yel5e"]
+[ext_resource type="Texture2D" uid="uid://cl4axm84s5a86" path="res://Assets/Sprites/Gems/gemstone17.png" id="12_wmxig"]
+[ext_resource type="Texture2D" uid="uid://ddatyf1qpq3kd" path="res://Assets/Sprites/Gems/gemstone10.png" id="13_mtdww"]
 
 [sub_resource type="Curve2D" id="Curve2D_pqv8b"]
 _data = {
@@ -33,6 +41,49 @@ curve = SubResource("Curve2D_pqv8b")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="PlayerHealthUI" parent="UI" instance=ExtResource("5_0hp2c")]
+offset_left = -2.0
+offset_top = -10.0
+offset_right = -2.0
+offset_bottom = -10.0
+
+[node name="OrangeGemLeaf32x32Styled" type="Sprite2D" parent="UI"]
+position = Vector2(668.875, -22.8749)
+scale = Vector2(1.25781, 1.25781)
+texture = ExtResource("6_0lsva")
+
+[node name="Gemstone54" type="Sprite2D" parent="UI"]
+position = Vector2(519, -11)
+texture = ExtResource("7_y0vlo")
+
+[node name="Gemstone52" type="Sprite2D" parent="UI"]
+position = Vector2(623.5, -18.5)
+scale = Vector2(1.9375, 1.9375)
+texture = ExtResource("8_65im5")
+
+[node name="Gemstone64" type="Sprite2D" parent="UI"]
+position = Vector2(765, -32)
+scale = Vector2(3.4375, 3.4375)
+texture = ExtResource("9_awnel")
+
+[node name="Gemstone38" type="Sprite2D" parent="UI"]
+position = Vector2(587, -18)
+scale = Vector2(1.6875, 1.6875)
+texture = ExtResource("10_tgmpa")
+
+[node name="Gemstone42" type="Sprite2D" parent="UI"]
+position = Vector2(450, -23)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("11_yel5e")
+
+[node name="Gemstone17" type="Sprite2D" parent="UI"]
+position = Vector2(715, -25)
+scale = Vector2(2.625, 2.625)
+texture = ExtResource("12_wmxig")
+
+[node name="Gemstone10" type="Sprite2D" parent="UI"]
+position = Vector2(552.875, -14.875)
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("13_mtdww")
 
 [connection signal="game_over_signal" from="Player" to="." method="_on_player_game_over_signal"]
 [connection signal="player_health_update_signal" from="Player" to="." method="_on_player_player_health_update_signal"]

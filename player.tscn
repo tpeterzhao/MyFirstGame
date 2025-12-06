@@ -1,7 +1,7 @@
 [gd_scene load_steps=79 format=3 uid="uid://21qe7wfygf0j"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_d5jvn"]
-[ext_resource type="Texture2D" uid="uid://dg2txo8sgsgtq" path="res://Assets/Sprites/Necromancer_creativekind-Sheet.png" id="1_eif40"]
+[ext_resource type="Texture2D" uid="uid://dg2txo8sgsgtq" path="res://Assets/Sprites/Animations/Characters/Necromancer_creativekind-Sheet.png" id="1_eif40"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1htsv"]
 atlas = ExtResource("1_eif40")

@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://icxcp4snqt5s"]
+
+[ext_resource type="Texture2D" uid="uid://boae5qv2aowot" path="res://Assets/Sprites/Animations/Projectiles/Fire_Ball/fire_ball_purple.png" id="1_q7vwq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0fsw"]
+atlas = ExtResource("1_q7vwq")
+region = Rect2(0, 0, 64, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjjww"]
+atlas = ExtResource("1_q7vwq")
+region = Rect2(64, 0, 64, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2prg2"]
+atlas = ExtResource("1_q7vwq")
+region = Rect2(128, 0, 64, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6g2y4"]
+atlas = ExtResource("1_q7vwq")
+region = Rect2(192, 0, 64, 29)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_em3xs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0fsw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjjww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2prg2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6g2y4")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[node name="fire_ball_purple" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_em3xs")
+animation = &"idle"
+frame_progress = 0.761945
